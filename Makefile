@@ -3,8 +3,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=upx
-PKG_VERSION:=3.95
-PKG_RELEASE:=1
+PKG_VERSION:=3.96
+PKG_RELEASE:=20201110
 
 ifeq ($(ARCH),x86_64)
 	PKG_ARCH:=amd64
@@ -14,9 +14,11 @@ ifeq ($(ARCH),i386)
 endif
 ifeq ($(ARCH),mipsel)
 	PKG_ARCH:=mipsel
+	PKG_VERSION:=3.95
 endif
 ifeq ($(ARCH),mips)
 	PKG_ARCH:=mips
+	PKG_VERSION:=3.95
 endif
 ifeq ($(ARCH),armeb)
 	PKG_ARCH:=armeb
@@ -41,7 +43,7 @@ PKG_HASH:=skip
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/upx
+define Package/$(PKG_NAME)
 	SUBMENU:=Compression
 	SECTION:=utils
 	CATEGORY:=Utilities
@@ -49,7 +51,7 @@ define Package/upx
 	URL:=https://https://upx.github.io
 endef
 
-define Package/upx/description
+define Package/$(PKG_NAME)/description
 The Ultimate Packer for eXecutables
 endef
 
@@ -62,15 +64,12 @@ define Build/Prepare
 	xz -d -c $(DL_DIR)/$(PKG_FILE) | tar -x -C $(PKG_BUILD_DIR)
 endef
 
-define Build/Configure
-endef
-
 define Build/Compile
 endef
 
-define Package/upx/install
+define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/upx-$(PKG_VERSION)-$(PKG_ARCH)_linux/upx $(1)/bin/upx
 endef
 
-$(eval $(call BuildPackage,upx))
+$(eval $(call BuildPackage,$(PKG_NAME)))
