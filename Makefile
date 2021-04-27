@@ -4,7 +4,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=upx
 PKG_VERSION:=3.96
-PKG_RELEASE:=20201110
+PKG_RELEASE:=$(SUBTARGET)
 
 ifeq ($(ARCH),x86_64)
 	PKG_ARCH:=amd64
@@ -14,11 +14,12 @@ ifeq ($(ARCH),i386)
 endif
 ifeq ($(ARCH),mipsel)
 	PKG_ARCH:=mipsel
-	PKG_VERSION:=3.95
+endif
+ifeq ($(ARCH),aarch64)
+	PKG_ARCH:=arm
 endif
 ifeq ($(ARCH),mips)
 	PKG_ARCH:=mips
-	PKG_VERSION:=3.95
 endif
 ifeq ($(ARCH),armeb)
 	PKG_ARCH:=armeb
